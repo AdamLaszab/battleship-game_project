@@ -27,21 +27,19 @@ int main(int argc, char *argv[]){
             }else{
                 //test E2
                 x=1;
-                    printf(riadok);
                     while(1) {
                         if (fgets(riadok1, MAX_LEN, subor1) != NULL) {
                             uprav(riadok1);
-                            printf("%d %s\n", x, riadok1);
-                            if(x==1){
-
+                            if(riadok1[0]=='\0'){
+                                break;
                             }
                             if(x==2){
                                 if(strchr(riadok1,',')==NULL){
-                                    fprintf(stderr,"2E2 %s %s\n",riadok ,riadok1);
+                                    fprintf(stderr,"E2 %s\n",riadok);
                                     break;
                                 }
                                 if(riadok1[0]==',' || riadok1[strlen(riadok1)-1]==','){
-                                    fprintf(stderr,"2E2 %s %s\n",riadok ,riadok1);
+                                    fprintf(stderr,"E2 %s\n",riadok);
                                     break;
                                 }
                                 char* prve = strtok(riadok1,",");
@@ -49,7 +47,7 @@ int main(int argc, char *argv[]){
                                 int flag=0;
                                 for(int i=0;prve[i]!= '\0';i++){
                                     if(isdigit(prve[i])==0){
-                                        fprintf(stderr,"2E2 %s %s\n",riadok ,riadok1);
+                                        fprintf(stderr,"E2 %s\n",riadok);
                                         flag=1;
                                         break;
                                     }
@@ -60,7 +58,7 @@ int main(int argc, char *argv[]){
                                 flag=0;
                                 for(int i=0;druhe[i]!= '\0';i++){
                                     if(isdigit(druhe[i])==0){
-                                        fprintf(stderr,"E2 %s %s\n",riadok ,riadok1);
+                                        fprintf(stderr,"E2 %s\n",riadok);
                                         flag=1;
                                         break;
                                     }
@@ -71,12 +69,32 @@ int main(int argc, char *argv[]){
 
                             }
                             if(x>2){
+                                if(strchr(riadok1,',')==NULL){
+                                    fprintf(stderr,"E2 %s\n",riadok);
+                                    break;
+                                }
+                                if(riadok1[0]==',' || riadok1[strlen(riadok1)-1]==','){
+                                    fprintf(stderr,"E2 %s\n",riadok);
+                                    break;
+                                }
+                                char* prve = strtok(riadok1,",");
+                                char* druhe = strtok(NULL,",");
+                                int flag=0;
+                                for(int i=0;druhe[i]!= '\0';i++){
+                                    if(isdigit(druhe[i])==0){
+                                        fprintf(stderr,"E2 %s\n",riadok);
+                                        flag=1;
+                                        break;
+                                    }
+                                }
+                                if(flag==1){
+                                    break;
+                                }
 
                             }
                             x++;
                         } else {
                             fclose((subor1));
-
                             break;
                         }
                     }
