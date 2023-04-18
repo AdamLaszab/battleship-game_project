@@ -1,0 +1,3 @@
+C:/Users/adaml/OneDrive/Documents/projects/Semester2/zadanie5/cmake-build-debug/CMakeFiles/zadanie5.dir
+C:/Users/adaml/OneDrive/Documents/projects/Semester2/zadanie5/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/adaml/OneDrive/Documents/projects/Semester2/zadanie5/cmake-build-debug/CMakeFiles/rebuild_cache.dir
