@@ -14,8 +14,8 @@ struct Position{
     int y;
 };
 struct menu{
-     char meno[MAX_LEN];
-     int cena;
+    char meno[MAX_LEN];
+    int cena;
 };
 struct Restaurant{
     char name[MAX_LEN];
@@ -45,101 +45,101 @@ int main(int argc, char *argv[]){
                 //test E2
                 x=1;
                 m=0;
-                    while(1) {
-                        if (fgets(riadok1, MAX_LEN, subor1) != NULL) {
-                            uprav(riadok1);
-                            if(riadok1[0]=='\0'){
-                                break;
-                            }
-                            if(x==1){
-                                strcpy(radenie[c].name,riadok1);
-                            }
-                            if(x==2){
-                                if(strchr(riadok1,',')==NULL){
-                                    fprintf(stderr,"E2 %s\n",riadok);
-                                    chyba++;
-                                    radenie[c].chyba=1;
-                                    break;
-                                }
-                                if(riadok1[0]==',' || riadok1[strlen(riadok1)-1]==','){
-                                    fprintf(stderr,"E2 %s\n",riadok);
-                                    chyba++;
-                                    radenie[c].chyba=1;
-                                    break;
-                                }
-                                char* prve = strtok(riadok1,",");
-                                char* druhe = strtok(NULL,",");
-                                int flag=0;
-                                for(int i=0;prve[i]!= '\0';i++){
-                                    if(isdigit(prve[i])==0){
-                                        fprintf(stderr,"E2 %s\n",riadok);
-                                        flag=1;
-                                        break;
-                                    }
-                                }
-                                if(flag==1){
-                                    chyba++;
-                                    radenie[c].chyba=1;
-                                    break;
-                                }
-                                flag=0;
-                                for(int i=0;druhe[i]!= '\0';i++){
-                                    if(isdigit(druhe[i])==0){
-                                        fprintf(stderr,"E2 %s\n",riadok);
-                                        flag=1;
-                                        break;
-                                    }
-                                }
-                                if(flag==1){
-                                    chyba++;
-                                    radenie[c].chyba=1;
-                                    break;
-                                }
-                                radenie[c].pos.x = strtol(prve,NULL,10);
-                                radenie[c].pos.y = strtol(druhe,NULL,10);
-                            }
-                            if(x>2){
-                                if(strchr(riadok1,',')==NULL){
-                                    fprintf(stderr,"E2 %s\n",riadok);
-                                    chyba++;
-                                    radenie[c].chyba=1;
-                                    break;
-                                }
-                                if(riadok1[0]==',' || riadok1[strlen(riadok1)-1]==','){
-                                    fprintf(stderr,"E2 %s\n",riadok);
-                                    chyba++;
-                                    radenie[c].chyba=1;
-                                    break;
-                                }
-                                char* prve = strtok(riadok1,",");
-                                char* druhe = strtok(NULL,",");
-                                int flag=0;
-                                for(int i=0;druhe[i]!= '\0';i++){
-                                    if(isdigit(druhe[i])==0){
-                                        fprintf(stderr,"E2 %s\n",riadok);
-                                        flag=1;
-                                        break;
-                                    }
-                                }
-                                if(flag==1){
-                                    chyba++;
-                                    radenie[c].chyba=1;
-                                    break;
-                                }
-                                strcpy(radenie[c].Jedla[m].meno,prve);
-                                radenie[c].Jedla[m].cena= strtol(druhe,NULL,10);
-                                m++;
-                            }
-                            x++;
-
-                        } else {
-                            fclose((subor1));
+                while(1) {
+                    if (fgets(riadok1, MAX_LEN, subor1) != NULL) {
+                        uprav(riadok1);
+                        if(riadok1[0]=='\0'){
                             break;
                         }
+                        if(x==1){
+                            strcpy(radenie[c].name,riadok1);
+                        }
+                        if(x==2){
+                            if(strchr(riadok1,',')==NULL){
+                                fprintf(stderr,"E2 %s\n",riadok);
+                                chyba++;
+                                radenie[c].chyba=1;
+                                break;
+                            }
+                            if(riadok1[0]==',' || riadok1[strlen(riadok1)-1]==','){
+                                fprintf(stderr,"E2 %s\n",riadok);
+                                chyba++;
+                                radenie[c].chyba=1;
+                                break;
+                            }
+                            char* prve = strtok(riadok1,",");
+                            char* druhe = strtok(NULL,",");
+                            int flag=0;
+                            for(int i=0;prve[i]!= '\0';i++){
+                                if(isdigit(prve[i])==0){
+                                    fprintf(stderr,"E2 %s\n",riadok);
+                                    flag=1;
+                                    break;
+                                }
+                            }
+                            if(flag==1){
+                                chyba++;
+                                radenie[c].chyba=1;
+                                break;
+                            }
+                            flag=0;
+                            for(int i=0;druhe[i]!= '\0';i++){
+                                if(isdigit(druhe[i])==0){
+                                    fprintf(stderr,"E2 %s\n",riadok);
+                                    flag=1;
+                                    break;
+                                }
+                            }
+                            if(flag==1){
+                                chyba++;
+                                radenie[c].chyba=1;
+                                break;
+                            }
+                            radenie[c].pos.x = strtol(prve,NULL,10);
+                            radenie[c].pos.y = strtol(druhe,NULL,10);
+                        }
+                        if(x>2){
+                            if(strchr(riadok1,',')==NULL){
+                                fprintf(stderr,"E2 %s\n",riadok);
+                                chyba++;
+                                radenie[c].chyba=1;
+                                break;
+                            }
+                            if(riadok1[0]==',' || riadok1[strlen(riadok1)-1]==','){
+                                fprintf(stderr,"E2 %s\n",riadok);
+                                chyba++;
+                                radenie[c].chyba=1;
+                                break;
+                            }
+                            char* prve = strtok(riadok1,",");
+                            char* druhe = strtok(NULL,",");
+                            int flag=0;
+                            for(int i=0;druhe[i]!= '\0';i++){
+                                if(isdigit(druhe[i])==0){
+                                    fprintf(stderr,"E2 %s\n",riadok);
+                                    flag=1;
+                                    break;
+                                }
+                            }
+                            if(flag==1){
+                                chyba++;
+                                radenie[c].chyba=1;
+                                break;
+                            }
+                            strcpy(radenie[c].Jedla[m].meno,prve);
+                            radenie[c].Jedla[m].cena= strtol(druhe,NULL,10);
+                            m++;
+                        }
+                        x++;
+
+                    } else {
+                        fclose((subor1));
+                        break;
                     }
-                        radenie[c].pocet=m;
-                        c++;
                 }
+                radenie[c].pocet=m;
+                c++;
+            }
 
 
             fclose((subor1));
@@ -166,7 +166,7 @@ int main(int argc, char *argv[]){
             for(int z=0;z<radenie[k].pocet;z++){
                 printf("{\n");
                 printf("\"Name\": \"%s\",\n", radenie[k].Jedla[z].meno);
-                printf("\"Price\": \"%d\"\n", radenie[k].Jedla[z].cena);
+                printf("\"Price\": %d\n", radenie[k].Jedla[z].cena);
                 if(z==radenie[k].pocet-1){
                     printf("}\n");
                 }else{

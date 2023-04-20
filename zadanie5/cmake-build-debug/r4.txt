@@ -5,7 +5,7 @@ Spaghetti Bolognese,9
 Tagliatelle Con Pollo,10
 Tuniakovy salat,7
 Kuraci vyvar,3
-Palacinky s dzemom
+Palacinky s dzemom,12
 Palacinky s nutellou,7
 Coca Cola,2
 
