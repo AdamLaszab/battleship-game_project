@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <ctype.h>
+#include <string.h>
 #define MAX_LEN 1000
 const char* uprav(char* uprav) {
     char* p;
@@ -20,11 +21,11 @@ struct menu{
 struct Restaurant{
     char name[MAX_LEN];
     struct Position pos;
-    struct menu Jedla[20];
+    struct menu Jedla[40];
     int pocet;
     int chyba;
 };
-struct Restaurant radenie[20];
+struct Restaurant radenie[40];
 
 int main(int argc, char *argv[]){
 
@@ -37,7 +38,9 @@ int main(int argc, char *argv[]){
     subor = fopen(nazov,"r");
     while(1){
         if(fgets(riadok,MAX_LEN,subor)!=NULL){
-            subor1=fopen(uprav(riadok),"r");
+            char zaciatok[1000]=".\\db\\";
+            strcat(zaciatok,uprav(riadok));
+            subor1=fopen(zaciatok,"r");
             //test E1
             if(subor1==NULL||riadok[0]=='.'){
                 fprintf(stderr,"E1 %s\n",riadok);
@@ -142,7 +145,6 @@ int main(int argc, char *argv[]){
             }
 
 
-            fclose((subor1));
         }else{
             break;
         }
