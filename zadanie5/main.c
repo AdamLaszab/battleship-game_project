@@ -38,7 +38,7 @@ int main(int argc, char *argv[]){
     subor = fopen(nazov,"r");
     while(1){
         if(fgets(riadok,MAX_LEN,subor)!=NULL){
-            char zaciatok[1000]=".\\db\\";
+            char zaciatok[1000]="db/";
             strcat(zaciatok,uprav(riadok));
             subor1=fopen(zaciatok,"r");
             //test E1

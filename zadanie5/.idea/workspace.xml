@@ -22,28 +22,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b19539ce-8eb0-4b62-88c0-f4044dd51b06" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-04-20T13-31-41-0405.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/zadanie5.dir/main.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/zadanie5.dir/main.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/db.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/r1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/r10.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/r2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/r3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/r4.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/r5.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/r6.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/r7.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/r8.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/r9.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/zadanie5.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/zadanie5.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/r1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/r2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/r3.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,6 +103,7 @@
       <workItem from="1682514558111" duration="61000" />
       <workItem from="1682523562872" duration="884000" />
       <workItem from="1682533808663" duration="4000" />
+      <workItem from="1682536874557" duration="90000" />
     </task>
     <servers />
   </component>
