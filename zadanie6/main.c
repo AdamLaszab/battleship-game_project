@@ -2,9 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 const int K = 10;
-void reset() {
-    printf("\033[0m");
-}
+
 void white(){
     printf("\033[97m");
 }
@@ -337,16 +335,18 @@ int main() {
     int hraciaPlocha[K][K];
     int hraciaPlochaProtivnik[K][K];
     int* lode[17];
+    int* lodeProtivnik[17];
     int x=0;
     int priebeh=0;
     int utok=0;
+    int flag=1;
     int stavy[]={1,1,1,1,1};
-    int stavy1[]={1,1,1,1,1};
+    int stavyProtivnik[]={1,1,1,1,1};
     naplnPlochu(hraciaPlocha);
     naplnPlochu(hraciaPlochaProtivnik);
-    while(x<14) {
+    while(1) {
         if(x==0) {
-            tlacPlochu(hraciaPlocha, hraciaPlochaProtivnik, stavy, stavy1);
+            tlacPlochu(hraciaPlocha, hraciaPlochaProtivnik, stavy, stavyProtivnik);
             while(priebeh==0) {
                 priebeh += zadajLod(hraciaPlocha, 5, lode, priebeh);
             }
@@ -362,13 +362,66 @@ int main() {
             while(priebeh==15) {
                 priebeh += zadajLod(hraciaPlocha, 2, lode, priebeh);
             }
+            priebeh=0;
+            tlacPlochu(hraciaPlochaProtivnik, hraciaPlocha, stavyProtivnik, stavy);
+            while(priebeh==0) {
+                priebeh += zadajLod(hraciaPlochaProtivnik, 5, lodeProtivnik, priebeh);
+            }
+            while(priebeh==5) {
+                priebeh += zadajLod(hraciaPlochaProtivnik, 4, lodeProtivnik, priebeh);
+            }
+            while(priebeh==9) {
+                priebeh += zadajLod(hraciaPlochaProtivnik, 3, lodeProtivnik, priebeh);
+            }
+            while(priebeh==12) {
+                priebeh += zadajLod(hraciaPlochaProtivnik, 3, lodeProtivnik, priebeh);
+            }
+            while(priebeh==15) {
+                priebeh += zadajLod(hraciaPlochaProtivnik, 2, lodeProtivnik, priebeh);
+            }
 
         }
         if(x>0){
+            printf("Hrac 1:\n");
             stavLodi(lode,stavy);
-            tlacPlochu(hraciaPlocha, hraciaPlochaProtivnik, stavy, stavy1);
+            stavLodi(lodeProtivnik,stavyProtivnik);
+            tlacPlochu(hraciaPlocha, hraciaPlochaProtivnik, stavy, stavyProtivnik);
+            while(utok==0) {
+                utok=zautoc(hraciaPlochaProtivnik);
+            }
+            stavLodi(lodeProtivnik,stavyProtivnik);
+            for(int i=0;i<5;i++){
+                flag=1;
+                if(stavyProtivnik[i]==1){
+                    flag=0;
+                    break;
+                }
+            }
+            if(flag==1){
+                printf("Vyhral hrac 1\n");
+                tlacPlochu(hraciaPlocha, hraciaPlochaProtivnik, stavy, stavyProtivnik);
+                return 0;
+            }
+            utok=0;
+            printf("Hrac 2:\n");
+            stavLodi(lode,stavy);
+            stavLodi(lodeProtivnik,stavyProtivnik);
+            tlacPlochu(hraciaPlochaProtivnik, hraciaPlocha, stavyProtivnik, stavy);
             while(utok==0) {
                 utok=zautoc(hraciaPlocha);
+            }
+            stavLodi(lode,stavy);
+            for(int i=0;i<5;i++){
+                flag=1;
+                if(stavy[i]==1){
+                    flag=0;
+                    break;
+                }
+            }
+            if(flag==1){
+                printf("Vyhral hrac 2\n");
+                tlacPlochu(hraciaPlochaProtivnik, hraciaPlocha, stavyProtivnik, stavy);
+                return 0;
             }
             utok=0;
         }
