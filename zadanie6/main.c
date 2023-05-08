@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 const int K = 10;
 void reset() {
     printf("\033[0m");
@@ -54,11 +55,11 @@ void tlacPlochu(int hraciaPlocha[K][K],int hraciaPlochaProtivnik[K][K],int stav[
                 green();
                 printf("[0]");
             }
-            if(hraciaPlocha[j][z]==2){
+            if(hraciaPlocha[j][z]%2!=0 && hraciaPlocha[j][z]>2 ){
                 red();
                 printf("[*]");
             }
-            if(hraciaPlocha[j][z]==3){
+            if(hraciaPlocha[j][z]%2==0 && hraciaPlocha[j][z]>=2){
                 yellow();
                 printf("[~]");
             }
@@ -117,12 +118,16 @@ void tlacPlochu(int hraciaPlocha[K][K],int hraciaPlochaProtivnik[K][K],int stav[
                 printf("[~]");
             }
             if(hraciaPlochaProtivnik[j][z]==1){
-                green();
-                printf("[0]");
+                blue();
+                printf("[~]");
             }
-            if(hraciaPlochaProtivnik[j][z]==2){
+            if(hraciaPlochaProtivnik[j][z]%2!=0 && hraciaPlochaProtivnik[j][z]>2 ){
                 red();
                 printf("[*]");
+            }
+            if(hraciaPlochaProtivnik[j][z]%2==0 && hraciaPlochaProtivnik[j][z]>=2){
+                yellow();
+                printf("[~]");
             }
         }
         if(j==0){
@@ -175,17 +180,56 @@ void tlacPlochu(int hraciaPlocha[K][K],int hraciaPlochaProtivnik[K][K],int stav[
     }
 }
 int zadajLod(int hraciaPlocha[K][K],int velkost,int* lode[17],int priebeh){
+    char riadok[100];
     char pismeno;
     int stlpec;
     char orientacia;
+    scanf("%s",riadok);
+    pismeno=riadok[0];
+    orientacia=riadok[2];
+    if(strlen(riadok)==3){
+        stlpec = atoi(&riadok[1]);
+    }else if(strlen(riadok)==4 && atoi(&riadok[1])==10 && atoi(&riadok[2])==0){
+        stlpec=10;
+        orientacia=riadok[3];
+    }else{
+        printf("1:%d\n",atoi(&riadok[1]));
+        printf("2:%d\n",atoi(&riadok[2]));
+        printf("Zly format skus znova.\n");
+        return 0;
+    }
+    if(pismeno>74){
+        printf("Prve pismeno nesedi\n");
+        return 0;
+    }
+    if(pismeno<65){
+        printf("Prve pismeno nesedi\n");
+        return 0;
+    }
+    if(stlpec>10){
+        printf("Cislo nesedi\n");
+        return 0;
+    }
+    if(stlpec<0){
+        printf("Cislo nesedi\n");
+        return 0;
+    }
+    if(orientacia!='r' && orientacia!='v'){
+        printf("Chybna orientacia\n");
+        return 0;
+    }
+
+
     int rad = pismeno-65;
     stlpec=stlpec-1;
     if(orientacia=='r'){
         if((stlpec-1)+velkost>=K){
+            printf("Lod konci mimo hracej plochy\n");
             return 0;
         }
         for(int i=0;i<velkost;i++){
             if(hraciaPlocha[rad][stlpec+i]==1){
+                printf("Lod sa prekryva s inou lodou\n");
                 return 0;
             }
         }
@@ -196,10 +240,12 @@ int zadajLod(int hraciaPlocha[K][K],int velkost,int* lode[17],int priebeh){
     }
     if(orientacia=='v'){
         if((rad-1)+velkost>=K){
+            printf("Lod konci mimo hracej plochy\n");
             return 0;
         }
         for(int i=0;i<velkost;i++){
             if(hraciaPlocha[(rad)+i][(stlpec)]==1){
+                printf("Lod sa prekryva s inou lodou\n");
                 return 0;
             }
         }
@@ -208,7 +254,7 @@ int zadajLod(int hraciaPlocha[K][K],int velkost,int* lode[17],int priebeh){
             lode[priebeh+i]=&hraciaPlocha[rad+i][(stlpec)];
         }
     }
-    priebeh+=velkost;
+    priebeh=velkost;
     return priebeh;
 }
 void stavLodi(int* lode[17],int stavy[5]){
@@ -250,24 +296,81 @@ void stavLodi(int* lode[17],int stavy[5]){
     flag=0;
 
 }
+int zautoc(int hraciaPlocha[K][K]){
+    char riadok[100];
+    char pismeno;
+    int stlpec;
+    scanf("%s",riadok);
+    pismeno=riadok[0];
+    if(strlen(riadok)==2){
+        stlpec = atoi(&riadok[1]);
+    }else if(strlen(riadok)==3 && atoi(&riadok[1])==10 && atoi(&riadok[2])==0){
+        stlpec=10;
+    }else{
+        printf("1:%d\n",atoi(&riadok[1]));
+        printf("2:%d\n",atoi(&riadok[2]));
+        printf("Zly format skus znova.\n");
+        return 0;
+    }
+    if(pismeno>74){
+        printf("Prve pismeno nesedi\n");
+        return 0;
+    }
+    if(pismeno<65){
+        printf("Prve pismeno nesedi\n");
+        return 0;
+    }
+    if(stlpec>10){
+        printf("Cislo nesedi\n");
+        return 0;
+    }
+    if(stlpec<1){
+        printf("Cislo nesedi\n");
+        return 0;
+    }
+    int rad = pismeno-65;
+    stlpec=stlpec-1;
+    hraciaPlocha[rad][stlpec]+=2;
+    return 1;
+}
 int main() {
     int hraciaPlocha[K][K];
     int hraciaPlochaProtivnik[K][K];
     int* lode[17];
     int x=0;
     int priebeh=0;
+    int utok=0;
     int stavy[]={1,1,1,1,1};
     int stavy1[]={1,1,1,1,1};
     naplnPlochu(hraciaPlocha);
     naplnPlochu(hraciaPlochaProtivnik);
-    while(x<2) {
+    while(x<14) {
         if(x==0) {
             tlacPlochu(hraciaPlocha, hraciaPlochaProtivnik, stavy, stavy1);
-            priebeh = zadajLod(hraciaPlocha, 5, 'A', 3, 'v', lode, priebeh);
-            priebeh = zadajLod(hraciaPlocha, 4, 'A', 4, 'v', lode, priebeh);
-            priebeh = zadajLod(hraciaPlocha, 3, 'A', 5, 'v', lode, priebeh);
-            priebeh = zadajLod(hraciaPlocha, 3, 'A', 6, 'v', lode, priebeh);
-            priebeh = zadajLod(hraciaPlocha, 2, 'A', 7, 'v', lode, priebeh);
+            while(priebeh==0) {
+                priebeh += zadajLod(hraciaPlocha, 5, lode, priebeh);
+            }
+            while(priebeh==5) {
+                priebeh += zadajLod(hraciaPlocha, 4, lode, priebeh);
+            }
+            while(priebeh==9) {
+                priebeh += zadajLod(hraciaPlocha, 3, lode, priebeh);
+            }
+            while(priebeh==12) {
+                priebeh += zadajLod(hraciaPlocha, 3, lode, priebeh);
+            }
+            while(priebeh==15) {
+                priebeh += zadajLod(hraciaPlocha, 2, lode, priebeh);
+            }
+
+        }
+        if(x>0){
+            stavLodi(lode,stavy);
+            tlacPlochu(hraciaPlocha, hraciaPlochaProtivnik, stavy, stavy1);
+            while(utok==0) {
+                utok=zautoc(hraciaPlocha);
+            }
+            utok=0;
         }
 
         x++;
