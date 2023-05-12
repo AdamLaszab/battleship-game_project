@@ -1,33 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-const int K = 10;
+#ifdef _WIN32
+#include <windows.h>
+#define PAUSE()              Sleep(1000/FPS)
+#define CLEAR_SCREEN()       system("cls");
+#define white()              SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+#define red()                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
+#define yellow()             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN);
+#define green()              SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+#define blue()               SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
+#else
+#include <unistd.h>
+#define PAUSE()              usleep(1000000/FPS)
+#define CLEAR_SCREEN()       printf("\x1b[2J");
+#define white()              printf("\033[97m");
+#define red()                printf("\033[31m");
+#define yellow()             printf("\033[33m");
+#define green()              printf("\033[32m");
+#define blue()               printf("\033[34m");
+#endif
+const int K = 10; // pocet riadkov a stlpcov hracej plochy
 
-void white(){
-    printf("\033[97m");
-}
-void red() {
-    printf("\033[31m");
-}
-void yellow(){
-    printf("\033[33m");
-}
-void green() {
-    printf("\033[32m");
-}
-
-void blue() {
-    printf("\033[34m");
-}
-
-void naplnPlochu(int hraciaPlocha[K][K]){
+void naplnPlochu(int hraciaPlocha[K][K]){  // naplni dvojrozmernu plochu nulami
     for (int i = 0; i < K; i++){
         for (int j = 0;j < K;j++){
             hraciaPlocha[i][j]=0;
         }
     }
 }
-void tlacPlochu(int hraciaPlocha[K][K],int hraciaPlochaProtivnik[K][K],int stav[5],int stav1[5]){
+void tlacPlochu(int hraciaPlocha[K][K],int hraciaPlochaProtivnik[K][K],int stav[5],int stav1[5]){ //funkcia vytlaci hracie plochy pre obidvoch hracov podla stavu
     white();
     printf("[ ]");
     for(int i=1;i<=10;i++){
@@ -177,7 +179,7 @@ void tlacPlochu(int hraciaPlocha[K][K],int hraciaPlochaProtivnik[K][K],int stav[
         printf("\n");
     }
 }
-int zadajLod(int hraciaPlocha[K][K],int velkost,int* lode[17],int priebeh){
+int zadajLod(int hraciaPlocha[K][K],int velkost,int* lode[17],int priebeh){  //funkcia nacita zaciatocnu poziciu lode a podla orientacie zmeni 0 na 1 v dvojrozmernom poly
     char riadok[100];
     char pismeno;
     int stlpec;
@@ -255,7 +257,7 @@ int zadajLod(int hraciaPlocha[K][K],int velkost,int* lode[17],int priebeh){
     priebeh=velkost;
     return priebeh;
 }
-void stavLodi(int* lode[17],int stavy[5]){
+void stavLodi(int* lode[17],int stavy[5]){ //podla poctu jednotiek zisti ci lode su potopene alebo stale v hre a podla toho upravi stavy
     int flag=0;
     for(int i=0;i<5;i++){
         if(*lode[i]==1){
@@ -294,7 +296,7 @@ void stavLodi(int* lode[17],int stavy[5]){
     flag=0;
 
 }
-int zautoc(int hraciaPlocha[K][K]){
+int zautoc(int hraciaPlocha[K][K]){ // funkcia nacita poziciu na ktoru bolo zautocene a zvysi hodnotu toho policka o 2
     char riadok[100];
     char pismeno;
     int stlpec;
@@ -305,8 +307,6 @@ int zautoc(int hraciaPlocha[K][K]){
     }else if(strlen(riadok)==3 && atoi(&riadok[1])==10 && atoi(&riadok[2])==0){
         stlpec=10;
     }else{
-        printf("1:%d\n",atoi(&riadok[1]));
-        printf("2:%d\n",atoi(&riadok[2]));
         printf("Zly format skus znova.\n");
         return 0;
     }
@@ -346,46 +346,71 @@ int main() {
     naplnPlochu(hraciaPlochaProtivnik);
     while(1) {
         if(x==0) {
+            printf("Hrac 1 zadava lode:\n");
+            printf("Hrac 1 plocha:\t\t\t\t\t\t\t\t\tHrac 2 plocha:\n");
             tlacPlochu(hraciaPlocha, hraciaPlochaProtivnik, stavy, stavyProtivnik);
+            white();
+            printf("Koordinacie lodi zadavajte vo formate [riadok][stlpec][orientacia]\nkde stlpec je "
+                   "od A-J,riadok je od 1-10,orientacia je bud 'v' ako \nna vysku alebo 'r' ako do riadka. Napr. A7v,C6r,G10v\n");
             while(priebeh==0) {
+                printf("Zadaj zaciatocnu koordinaciu Carrieru(velkost 5):");
                 priebeh += zadajLod(hraciaPlocha, 5, lode, priebeh);
             }
             while(priebeh==5) {
+                printf("Zadaj zaciatocnu koordinaciu Battleshipu:(velkost 4):");
                 priebeh += zadajLod(hraciaPlocha, 4, lode, priebeh);
             }
             while(priebeh==9) {
+                printf("Zadaj zaciatocnu koordinaciu Destroyeru:(velkost 3):");
                 priebeh += zadajLod(hraciaPlocha, 3, lode, priebeh);
             }
             while(priebeh==12) {
+                printf("Zadaj zaciatocnu koordinaciu pre Submarine:(velkost 3):");
                 priebeh += zadajLod(hraciaPlocha, 3, lode, priebeh);
             }
             while(priebeh==15) {
+                printf("Zadaj zaciatocnu koordinaciu pre PatrolBoat:(velkost 2):");
                 priebeh += zadajLod(hraciaPlocha, 2, lode, priebeh);
             }
             priebeh=0;
+            CLEAR_SCREEN();
+            printf("Hrac 2 zadava lode:\n");
+            printf("Hrac 2 plocha:\t\t\t\t\t\t\t\t\tHrac 1 plocha:\n");
             tlacPlochu(hraciaPlochaProtivnik, hraciaPlocha, stavyProtivnik, stavy);
+            white();
+            printf("Koordinacie lodi zadavajte vo formate [riadok][stlpec][orientacia]\nkde stlpec je "
+                   "od A-J,riadok je od 1-10,orientacia je bud 'v' ako \nna vysku alebo 'r' ako do riadka. Napr. A7v,C6r,G10v\n");
             while(priebeh==0) {
+                printf("Zadaj zaciatocnu koordinaciu Carrieru(velkost 5):");
                 priebeh += zadajLod(hraciaPlochaProtivnik, 5, lodeProtivnik, priebeh);
             }
             while(priebeh==5) {
+                printf("Zadaj zaciatocnu koordinaciu Battleshipu:(velkost 4):");
                 priebeh += zadajLod(hraciaPlochaProtivnik, 4, lodeProtivnik, priebeh);
             }
             while(priebeh==9) {
+                printf("Zadaj zaciatocnu koordinaciu Destroyeru:(velkost 3):");
                 priebeh += zadajLod(hraciaPlochaProtivnik, 3, lodeProtivnik, priebeh);
             }
             while(priebeh==12) {
+                printf("Zadaj zaciatocnu koordinaciu pre Submarine:(velkost 3):");
                 priebeh += zadajLod(hraciaPlochaProtivnik, 3, lodeProtivnik, priebeh);
             }
             while(priebeh==15) {
+                printf("Zadaj zaciatocnu koordinaciu pre PatrolBoat:(velkost 2):");
                 priebeh += zadajLod(hraciaPlochaProtivnik, 2, lodeProtivnik, priebeh);
             }
-
+            CLEAR_SCREEN();
         }
         if(x>0){
+            printf("Hrac 1 utoci\n");
             printf("Hrac 1:\n");
             stavLodi(lode,stavy);
             stavLodi(lodeProtivnik,stavyProtivnik);
+            printf("Hrac 1 plocha:\t\t\t\t\t\t\t\t\tHrac 2 plocha:\n");
             tlacPlochu(hraciaPlocha, hraciaPlochaProtivnik, stavy, stavyProtivnik);
+            white();
+            printf("Koordinacie utoku zadavajte vo formate [riadok][stlpec] napr.A4,C10\n");
             while(utok==0) {
                 utok=zautoc(hraciaPlochaProtivnik);
             }
@@ -399,14 +424,20 @@ int main() {
             }
             if(flag==1){
                 printf("Vyhral hrac 1\n");
+                printf("Hrac 1 plocha:\t\t\t\t\t\t\t\t\tHrac 2 plocha:\n");
                 tlacPlochu(hraciaPlocha, hraciaPlochaProtivnik, stavy, stavyProtivnik);
                 return 0;
             }
             utok=0;
+            CLEAR_SCREEN();
+            printf("Hrac 2 utoci:\n");
             printf("Hrac 2:\n");
             stavLodi(lode,stavy);
             stavLodi(lodeProtivnik,stavyProtivnik);
+            printf("Hrac 2 plocha:\t\t\t\t\t\t\t\t\tHrac 1 plocha:\n");
             tlacPlochu(hraciaPlochaProtivnik, hraciaPlocha, stavyProtivnik, stavy);
+            white();
+            printf("Koordinacie utoku zadavajte vo formate [riadok][stlpec] napr.A4,C10\n");
             while(utok==0) {
                 utok=zautoc(hraciaPlocha);
             }
@@ -420,10 +451,12 @@ int main() {
             }
             if(flag==1){
                 printf("Vyhral hrac 2\n");
+                printf("Hrac 2 plocha:\t\t\t\t\t\t\t\t\tHrac 1 plocha:\n");
                 tlacPlochu(hraciaPlochaProtivnik, hraciaPlocha, stavyProtivnik, stavy);
                 return 0;
             }
             utok=0;
+            CLEAR_SCREEN();
         }
 
         x++;
