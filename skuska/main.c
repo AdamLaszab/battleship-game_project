@@ -3,25 +3,38 @@
 #include <string.h>
 #include <math.h>
 
-void fun(int pole[],int dlzka){
-    int maxi=pole[0];
-    int maxi2=pole[0];
-    for(int i=0;i<dlzka;i++){
-        if(pole[i]>maxi){
-            maxi=pole[i];
-        }
-        if(pole[i]>maxi2 && pole[i]<maxi){
-            maxi2=pole[i];
-        }
-    }
-    printf("%d",maxi2);
+
+
+void zmenEndian(unsigned long long* adresa) {
+    unsigned char* p = (unsigned char*)adresa;  // Pretypovanie smerníka adresa na unsigned char*
+    unsigned char temp;
+
+    // Vymena bajtov pomocou troch prehodeni
+    temp = p[0];
+    p[0] = p[7];
+    p[7] = temp;
+
+    temp = p[1];
+    p[1] = p[6];
+    p[6] = temp;
+
+    temp = p[2];
+    p[2] = p[5];
+    p[5] = temp;
+
+    temp = p[3];
+    p[3] = p[4];
+    p[4] = temp;
 }
 
 int main() {
-  int pole[10]={1,2,3,13,5,6,7,8,9,10};
-  int dlzka=10;
-  fun(pole,dlzka);
+    unsigned long long num = 0x0102030405060708ull;
 
+    printf("Pred zmenou endianu: 0x%016llx\n", num);
 
-  return 0;
+    zmenEndian(&num);
+
+    printf("Po zmene endianu:    0x%016llx\n", num);
+
+    return 0;
 }
